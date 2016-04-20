@@ -1,10 +1,20 @@
 import games
 import heuristicas
 
-aux1 = raw_input("Quien empiezaX-O: ")
+
+
+
+aux1 = raw_input("Eliga nivel --> facil(1), medio(2) o dificil(3):  ")
+dificultad = int(str(aux1).strip())
+while(dificultad != 1 and dificultad != 2 and dificultad != 3):
+    aux1 = raw_input("Eliga BIEN el nivel --> facil(1), medio(2) o dificil(3):  ")
+    dificultad = int(str(aux1).strip())
+
+
+aux1 = raw_input("Decide si empieza la maquina(X) o tu(O): ")
 aux2 = str(aux1).strip()
 while(aux2 != 'X' and aux2 != 'O'):
-    aux1 = raw_input("Quien empieza X-O: ")
+    aux1 = raw_input("Decide si empieza la maquina(X) o tu(O): ")
     aux2 = str(aux1).strip()
 
 player = aux2
@@ -25,6 +35,10 @@ while True:
     if player == 'O':
         col_str = raw_input("Movimiento: ")
         coor = int(str(col_str).strip())
+        while(coor < 1 or coor > 7):
+            col_str = raw_input("Introduzca un movimiento valido - Movimiento: ")
+            coor = int(str(col_str).strip())
+
         x = coor
         y = -1
         legal_moves = game.legal_moves(state)
@@ -38,7 +52,12 @@ while True:
         print "Thinking..."
         #move = games.minimax_decision(state, game)
         #move = games.alphabeta_full_search(state, game)
-        move = games.alphabeta_search(state, game,eval_fn=heuristicas.h0)
+        if dificultad == 1:
+            move = games.alphabeta_search(state, game, eval_fn=heuristicas.h0, d=2)
+        elif dificultad == 2:
+            move = games.alphabeta_search(state, game, eval_fn=heuristicas.h0, d=3)
+        else:
+            move = games.alphabeta_search(state, game,eval_fn=heuristicas.h0, d=5)
 
         state = game.make_move(move, state)
         player = 'O'
