@@ -193,11 +193,11 @@ class TicTacToe(Game):
     A state has the player to move, a cached utility, a list of moves in
     the form of a list of (x, y) positions, and a board, in the form of
     a dict of {(x, y): Player} entries, where Player is 'X' or 'O'."""
-    def __init__(self, h=3, v=3, k=3):
+    def __init__(self, h=3, v=3, k=3, var='X'):
         update(self, h=h, v=v, k=k)
         moves = [(x, y) for x in range(1, h+1)
                  for y in range(1, v+1)]
-        self.initial = Struct(to_move='X', utility=0, board={}, moves=moves)
+        self.initial = Struct(to_move=var, utility=0, board={}, moves=moves)
 
     def legal_moves(self, state):
         "Legal moves are any square not yet taken."
@@ -217,9 +217,9 @@ class TicTacToe(Game):
     def utility(self, state, player):
         "Return the value to X; 1 for win, -1 for loss, 0 otherwise."
         if player == 'X':
-            return state.utility
+            return state.utility*100000
         if player == 'O':
-            return -state.utility
+            return -state.utility*100000
         #return state.utility
 
     def terminal_test(self, state):
@@ -264,9 +264,9 @@ class ConnectFour(TicTacToe):
     """A TicTacToe-like game in which you can only make a move on the bottom
     row, or in a square directly above an occupied square.  Traditionally
     played on a 7x6 board and requiring 4 in a row."""
-    
-    def __init__(self, h=7, v=6, k=4):
-        TicTacToe.__init__(self, h, v, k)
+
+    def __init__(self, h=7, v=6, k=4, var='X'):
+        TicTacToe.__init__(self, h, v, k,var)
 
     def legal_moves(self, state):
         "Legal moves are any square not yet taken."

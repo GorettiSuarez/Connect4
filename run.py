@@ -1,12 +1,22 @@
 import games
+import heuristicas
+
+aux1 = raw_input("Quien empiezaX-O: ")
+aux2 = str(aux1).strip()
+while(aux2 != 'X' and aux2 != 'O'):
+    aux1 = raw_input("Quien empieza X-O: ")
+    aux2 = str(aux1).strip()
+
+player = aux2
 
 #game = games.TicTacToe(h=3,v=3,k=3)
-game = games.ConnectFour()
+game = games.ConnectFour(var=player)
 
 state = game.initial
 
+#O siempre es humano y X siempre es maquina
 
-player = 'X'
+
 
 while True:
     print "Jugador a mover:", game.to_move(state)
@@ -28,7 +38,7 @@ while True:
         print "Thinking..."
         #move = games.minimax_decision(state, game)
         #move = games.alphabeta_full_search(state, game)
-        move = games.alphabeta_search(state, game)
+        move = games.alphabeta_search(state, game,eval_fn=heuristicas.h0)
 
         state = game.make_move(move, state)
         player = 'O'
