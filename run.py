@@ -55,9 +55,9 @@ while True:
         if dificultad == 1:
             move = games.alphabeta_search(state, game, eval_fn=heuristicas.h1, d=2)
         elif dificultad == 2:
-            move = games.alphabeta_search(state, game, eval_fn=heuristicas.h1, d=3)
+            move = games.alphabeta_search(state, game, eval_fn=heuristicas.h0, d=3)
         else:
-            move = games.alphabeta_search(state, game,eval_fn=heuristicas.h1, d=5)
+            move = games.alphabeta_search(state, game,eval_fn=heuristicas.h0, d=5)
 
         state = game.make_move(move, state)
         player = 'O'

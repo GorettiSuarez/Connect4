@@ -15,7 +15,7 @@ def h1(state):
             higher = k_inVO
         if state.utility != 0 or len(state.moves) == 0:
             return infinity
-    print("AQUI VIENE EL HIGHER")
+    print("AQUI VIENE EL HIGHER: ")
     print(higher)
     return higher
     #Se devuelve en negativo porque la calculas para O, entonces su mejor jugada NO te favoreceria
