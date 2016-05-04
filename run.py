@@ -4,10 +4,10 @@ import heuristicas
 
 
 
-aux1 = raw_input("Eliga nivel --> facil(1), medio(2) o dificil(3):  ")
+aux1 = raw_input("Elija nivel --> facil(1), medio(2) o dificil(3):  ")
 dificultad = int(str(aux1).strip())
 while(dificultad != 1 and dificultad != 2 and dificultad != 3):
-    aux1 = raw_input("Eliga BIEN el nivel --> facil(1), medio(2) o dificil(3):  ")
+    aux1 = raw_input("Elija BIEN el nivel --> facil(1), medio(2) o dificil(3):  ")
     dificultad = int(str(aux1).strip())
 
 
@@ -53,11 +53,11 @@ while True:
         #move = games.minimax_decision(state, game)
         #move = games.alphabeta_full_search(state, game)
         if dificultad == 1:
-            move = games.alphabeta_search(state, game, eval_fn=heuristicas.h0, d=2)
+            move = games.alphabeta_search(state, game, eval_fn=heuristicas.h1, d=2)
         elif dificultad == 2:
-            move = games.alphabeta_search(state, game, eval_fn=heuristicas.h0, d=3)
+            move = games.alphabeta_search(state, game, eval_fn=heuristicas.h1, d=3)
         else:
-            move = games.alphabeta_search(state, game,eval_fn=heuristicas.h0, d=5)
+            move = games.alphabeta_search(state, game,eval_fn=heuristicas.h1, d=5)
 
         state = game.make_move(move, state)
         player = 'O'

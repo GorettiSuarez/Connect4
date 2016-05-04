@@ -217,9 +217,9 @@ class TicTacToe(Game):
     def utility(self, state, player):
         "Return the value to X; 1 for win, -1 for loss, 0 otherwise."
         if player == 'X':
-            return state.utility*100000
+            return state.utility
         if player == 'O':
-            return -state.utility*100000
+            return -state.utility
         #return state.utility
 
     def terminal_test(self, state):
