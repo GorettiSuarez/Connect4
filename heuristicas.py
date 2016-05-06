@@ -9,11 +9,13 @@ def h0(self):
 def number_in_row(board, move, player, delta):
     value = 0
     n = 0
+    m = 0
     x, y = move
     while (board.get((x, y)) == player or board.get((x, y)) is None):
         if x > 7 or x < 0 or y > 6 or y < 0:
             break
         if board.get((x, y)) == player:
+            m +=1
             value += 5
         if board.get((x, y)) is None:
             value += 1
@@ -25,6 +27,7 @@ def number_in_row(board, move, player, delta):
         if x > 7 or x < 0 or y > 6 or y < 0:
             break
         if board.get((x, y)) == player:
+            m += 1
             value += 5
         if board.get((x, y)) is None:
             value += 1
@@ -32,6 +35,9 @@ def number_in_row(board, move, player, delta):
         n += 1
 
     n -= 1
+
+    if  m == 3:
+        return -55555555555
 
     if n>=4:
         return value
@@ -41,6 +47,7 @@ def number_in_row(board, move, player, delta):
 
 def mih(state):
     h_X = 0
+
     for move in legal_moves(state):
         h_X += number_in_row(state.board, move, 'X', (1, 0))
         h_X += number_in_row(state.board, move, 'X', (0, 1))
@@ -54,8 +61,6 @@ def mih(state):
         h_O += number_in_row(state.board, move, 'O', (1, 1))
         h_O += number_in_row(state.board, move, 'O', (1, -1))
 
-    if state.utility != 0 or len(state.moves) == 0:
-        return infinity
     return h_X - h_O
 
 #ESTO NO SIRVE
