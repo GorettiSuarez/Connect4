@@ -42,7 +42,7 @@ def mih(state):
     if(state.utility == 1):
         return infinity
     elif (state.utility == -1 ):
-        return -infinity
+        return -100000000
 
     h_X = 0
 

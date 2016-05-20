@@ -53,9 +53,9 @@ while True:
         #move = games.minimax_decision(state, game)
         #move = games.alphabeta_full_search(state, game)
         if dificultad == 1:
-            move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=2)
+            move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=1)
         elif dificultad == 2:
-            move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=3)
+            move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=2)
         else:
             move = games.alphabeta_search(state, game,eval_fn=heuristicas.mih, d=4)
 
