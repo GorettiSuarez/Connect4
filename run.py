@@ -1,23 +1,31 @@
+# coding=utf-8
 import games
 import heuristicas
 
 
+level = raw_input("Elija nivel --> facil(1), medio(2) o dificil(3):  ")
+level2 = int(str(level))
+while(level2 != 1 and level2 != 2 and level2 != 3):
+    level = raw_input("Elija BIEN el nivel --> facil(1), medio(2) o dificil(3):  ")
+    level2 = int(str(level))
 
+mode = raw_input("Elija modo de juego -->  Máquina vs Máquina (1) o Jugador vs Máquina (2):")
+mode2 = int(str(mode))
+while(mode2 != 1 and mode2 != 2):
+    mode = raw_input("Elija modo de juego -->  Máquina vs Máquina (1) o Jugador vs Máquina (2):)")
+    mode2 = int(str(mode))
 
-aux1 = raw_input("Elija nivel --> facil(1), medio(2) o dificil(3):  ")
-dificultad = int(str(aux1).strip())
-while(dificultad != 1 and dificultad != 2 and dificultad != 3):
-    aux1 = raw_input("Elija BIEN el nivel --> facil(1), medio(2) o dificil(3):  ")
-    dificultad = int(str(aux1).strip())
+if(mode2 == 2):
+    first = raw_input("Decide si empieza la maquina(X) o tu(O): ")
+    first2 = str(first)
+    while (first2 != 'X' and first2 != 'O'):
+        first = raw_input("Decide si empieza la maquina(X) o tu(O): ")
+        first2 = str(first)
 
+    player = first2
+else:
+    player = 'X'
 
-aux1 = raw_input("Decide si empieza la maquina(X) o tu(O): ")
-aux2 = str(aux1).strip()
-while(aux2 != 'X' and aux2 != 'O'):
-    aux1 = raw_input("Decide si empieza la maquina(X) o tu(O): ")
-    aux2 = str(aux1).strip()
-
-player = aux2
 
 #game = games.TicTacToe(h=3,v=3,k=3)
 game = games.ConnectFour(var=player)
@@ -33,28 +41,43 @@ while True:
     game.display(state)
 
     if player == 'O':
-        col_str = raw_input("Movimiento: ")
-        coor = int(str(col_str).strip())
-        while(coor < 1 or coor > 7):
-            col_str = raw_input("Introduzca un movimiento valido - Movimiento: ")
+        if (mode2 == 2):
+            col_str = raw_input("Movimiento: ")
             coor = int(str(col_str).strip())
+            while(coor < 1 or coor > 7):
+                col_str = raw_input("Introduzca un movimiento valido - Movimiento: ")
+                coor = int(str(col_str).strip())
 
-        x = coor
-        y = -1
-        legal_moves = game.legal_moves(state)
-        for lm in legal_moves:
-            if lm[0] == x:
-                y = lm[1]
+            x = coor
+            y = -1
+            legal_moves = game.legal_moves(state)
+            for lm in legal_moves:
+                if lm[0] == x:
+                    y = lm[1]
 
-        state = game.make_move((x, y), state)
-        player = 'X'
+            state = game.make_move((x, y), state)
+            player = 'X'
+        else:
+            print "Thinking..."
+            # move = games.minimax_decision(state, game)
+            # move = games.alphabeta_full_search(state, game)
+            if level2 == 1:
+                move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=1,player=player)
+            elif level2 == 2:
+                move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=2,player=player)
+            else:
+                move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=4,player=player)
+
+            state = game.make_move(move, state)
+            player = 'X'
+
     else:
         print "Thinking..."
         #move = games.minimax_decision(state, game)
         #move = games.alphabeta_full_search(state, game)
-        if dificultad == 1:
+        if level2 == 1:
             move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=1)
-        elif dificultad == 2:
+        elif level2 == 2:
             move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=2)
         else:
             move = games.alphabeta_search(state, game,eval_fn=heuristicas.mih, d=4)
