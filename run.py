@@ -2,38 +2,45 @@
 import games
 import heuristicas
 
-
 level = raw_input("Elija nivel --> facil(1), medio(2) o dificil(3):  ")
-level2 = int(str(level))
-while(level2 != 1 and level2 != 2 and level2 != 3):
-    level = raw_input("Elija BIEN el nivel --> facil(1), medio(2) o dificil(3):  ")
-    level2 = int(str(level))
+while level != '1' and level != '2' and level != '3':
+    level = raw_input("Elija correctamente el nivel --> facil(1), medio(2) o dificil(3):  ")
 
 mode = raw_input("Elija modo de juego -->  Máquina vs Máquina (1) o Jugador vs Máquina (2):")
-mode2 = int(str(mode))
-while(mode2 != 1 and mode2 != 2):
-    mode = raw_input("Elija modo de juego -->  Máquina vs Máquina (1) o Jugador vs Máquina (2):)")
-    mode2 = int(str(mode))
+while mode != '1' and mode != '2':
+    mode = raw_input("Elija correctamente el modo de juego -->  Máquina vs Máquina (1) o Jugador vs Máquina (2):)")
 
-if(mode2 == 2):
+if mode == '2':
     first = raw_input("Decide si empieza la maquina(X) o tu(O): ")
-    first2 = str(first)
-    while (first2 != 'X' and first2 != 'O'):
-        first = raw_input("Decide si empieza la maquina(X) o tu(O): ")
-        first2 = str(first)
-
-    player = first2
+    while first != 'X' and first != 'O':
+        first = raw_input("Decide correctamente si empieza la maquina(X) o tu(O): ")
+    player = first
 else:
     player = 'X'
 
-
-#game = games.TicTacToe(h=3,v=3,k=3)
+# game = games.TicTacToe(h=3,v=3,k=3)
 game = games.ConnectFour(var=player)
 
 state = game.initial
 
-#O siempre es humano y X siempre es maquina
 
+# O siempre es humano y X siempre es maquina
+
+def machineMove(state2, player2, nextPlayer,heuristic):
+    print "Thinking..."
+    # move = games.minimax_decision(state, game)
+    # move = games.alphabeta_full_search(state, game)
+    if level == '1':
+        move = games.alphabeta_search(state2, game, eval_fn=heuristic, d=1, player=player2)
+    elif level == '2':
+        move = games.alphabeta_search(state2, game, eval_fn=heuristic, d=2, player=player2)
+    else:
+        move = games.alphabeta_search(state2, game, eval_fn=heuristic, d=4, player=player2)
+
+    global state
+    state = game.make_move(move, state2)
+    global player
+    player = nextPlayer
 
 
 while True:
@@ -41,10 +48,10 @@ while True:
     game.display(state)
 
     if player == 'O':
-        if (mode2 == 2):
+        if mode == '2':
             col_str = raw_input("Movimiento: ")
             coor = int(str(col_str).strip())
-            while(coor < 1 or coor > 7):
+            while coor < 1 or coor > 7:
                 col_str = raw_input("Introduzca un movimiento valido - Movimiento: ")
                 coor = int(str(col_str).strip())
 
@@ -58,32 +65,11 @@ while True:
             state = game.make_move((x, y), state)
             player = 'X'
         else:
-            print "Thinking..."
-            # move = games.minimax_decision(state, game)
-            # move = games.alphabeta_full_search(state, game)
-            if level2 == 1:
-                move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=1,player=player)
-            elif level2 == 2:
-                move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=2,player=player)
-            else:
-                move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=4,player=player)
 
-            state = game.make_move(move, state)
-            player = 'X'
-
+            machineMove(state, player, 'X',heuristicas.mih)
     else:
-        print "Thinking..."
-        #move = games.minimax_decision(state, game)
-        #move = games.alphabeta_full_search(state, game)
-        if level2 == 1:
-            move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=1)
-        elif level2 == 2:
-            move = games.alphabeta_search(state, game, eval_fn=heuristicas.mih, d=2)
-        else:
-            move = games.alphabeta_search(state, game,eval_fn=heuristicas.mih, d=4)
+        machineMove(state, player, 'O',heuristicas.mih)
 
-        state = game.make_move(move, state)
-        player = 'O'
     print "-------------------"
     if game.terminal_test(state):
         game.display(state)
